@@ -1,0 +1,12 @@
+
+let
+    Source = Csv.Document(File.Contents("powerbi_export.csv"),[Delimiter=",", Encoding=65001, QuoteStyle=QuoteStyle.Csv]),
+    Promoted = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+    ChangedTypes = Table.TransformColumnTypes(Promoted,{
+        {"timestamp", type datetime}, {"ingest_time", type datetime}, {"batch_id", type text},
+        {"temp_c", type number}, {"pH", type number}, {"conductivity", type number},
+        {"qc_pass", Int64.Type}, {"reagent_lot", type text}, {"anomaly", Int64.Type}
+    }),
+    AddDate = Table.AddColumn(ChangedTypes, "date", each Date.From([timestamp]), type date)
+in
+    AddDate

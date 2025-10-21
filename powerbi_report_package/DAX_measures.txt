@@ -1,0 +1,21 @@
+
+-- Suggested DAX measures for Power BI (paste into Report view -> New measure)
+
+TotalRows = COUNTROWS('powerbi_export')
+
+QCFailures = CALCULATE(COUNTROWS('powerbi_export'), FILTER('powerbi_export', 'powerbi_export'[qc_pass] = 0))
+
+FailureRate = DIVIDE([QCFailures], [TotalRows], 0) -- fraction (0..1). Multiply by 100 for percent in visuals.
+
+DistinctBatches = DISTINCTCOUNT('powerbi_export'[batch_id])
+
+AnomalyCount = CALCULATE(COUNTROWS('powerbi_export'), FILTER('powerbi_export', 'powerbi_export'[anomaly] = 1))
+
+-- Example: Batch-level failure rate
+BatchFailureRate = DIVIDE(CALCULATE(COUNTROWS('powerbi_export'), FILTER('powerbi_export', 'powerbi_export'[qc_pass] = 0)), DISTINCTCOUNT('powerbi_export'[batch_id]))
+
+-- Rolling 7-day failure rate (requires a proper Date table)
+RollingFailureRate_7d = 
+VAR MaxDate = MAX('powerbi_export'[timestamp])
+RETURN
+CALCULATE([FailureRate], DATESINPERIOD('powerbi_export'[timestamp], MaxDate, -7, DAY))
