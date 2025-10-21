@@ -1,5 +1,4 @@
-# bioproduction-data-platform-poc
-
+# Bioproduction-data-platform
 Proof-of-concept data platform for bioproduction telemetry. Includes:
 - synthetic data generation
 - ETL pipelines (extract, transform, load into Parquet/CSV)
@@ -34,6 +33,4 @@ bioproduction-data-platform-poc/
 ├─ data/                   # generated sample data and exported CSVs
 └─ docs/
    └─ power_bi_instructions.md
-```
 
-Author: Prepared for PAN-Biotech application demonstration.
