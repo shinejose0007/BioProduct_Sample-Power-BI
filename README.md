@@ -32,5 +32,5 @@ bioproduction-data-platform-poc/
 │  └─ models.py            # anomaly detector
 ├─ data/                   # generated sample data and exported CSVs
 └─ docs/
-   └─ power_bi_instructions.md
+   └─ power_bi_Report_Package-Folder
 
